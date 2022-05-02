@@ -12,15 +12,12 @@
         $a = new Aluno();
 
         var_dump(
-            $a->NOTA1(6),
-            $a->NOTA2(7),
-            $a->NOTA3(8),
+            $a->NOTA1(0),
+            $a->NOTA2(10),
+            $a->NOTA3(10),
             $a->NOTA4(10)
         );
         
-
-
-
         var_dump($a->calcMedia());
     ?>
 </body>

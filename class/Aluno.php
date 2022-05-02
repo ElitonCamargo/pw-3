@@ -63,8 +63,17 @@ class Aluno{
         }
     }
 
-    public function calcMedia(){
-        $this->media = ($this->nota1 + $this->nota2 + $this->nota3 + $this->nota4)/4;
+    public function calcMedia($peso=[]){
+        if($peso == []){
+            $this->media = ($this->nota1 + $this->nota2 + $this->nota3 + $this->nota4)/4;
+            return $this->media;
+        }
+               
+        $this->media += $this->nota1 * $peso[0];
+        $this->media += $this->nota2 * $peso[1];
+        $this->media += $this->nota3 * $peso[2];
+        $this->media += $this->nota4 * $peso[3];        
+        $this->media = $this->media/array_sum($peso);
         return $this->media;
     }
 }
