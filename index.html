@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <fieldset>
+            <legend>Novo contato</legend>
+            <input type="text"  id="nomeContato"    placeholder="Nome">
+            <input type="tel"   id="telContato"     placeholder="(00)0000-0000">
+            <button id="btnSalvar">Salvar</button>
+        </fieldset>        
+    </div>
+    <table id="tabelaContatos">
+        <tr>
+            <th>Nome</th>
+            <th>Telefone</th>
+        </tr>
+    </table>
+
+    <script>
+        var btnSalvar = document.getElementById('btnSalvar');
+        var tabelaContatos = document.getElementById('tabelaContatos');
+        btnSalvar.onclick = function(){
+            tabelaContatos.innerHTML += 
+            `
+                <tr>
+                    <td>${nomeContato.value}</td>
+                    <td>${telContato.value}</td>
+                </tr>
+            `;
+            nomeContato.value = '';
+            telContato.value = '';
+        }
+    </script>
+</body>
+</html>
