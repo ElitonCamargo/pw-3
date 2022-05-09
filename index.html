@@ -5,6 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+    table, th, td {
+        border: 1px solid white;
+        border-collapse: collapse;
+      }
+      th, td {
+        background-color: #96D4D4;
+      }
+    </style>
 </head>
 <body>
     <div>
@@ -19,23 +28,113 @@
         <tr>
             <th>Nome</th>
             <th>Telefone</th>
-        </tr>
+            <th>Edite</th>
+            <th>Delete</th>
+        </tr>        
     </table>
 
     <script>
         var btnSalvar = document.getElementById('btnSalvar');
         var tabelaContatos = document.getElementById('tabelaContatos');
+        var contador = 100;
+
         btnSalvar.onclick = function(){
             tabelaContatos.innerHTML += 
             `
-                <tr>
+                <tr id="${contador}">
                     <td>${nomeContato.value}</td>
                     <td>${telContato.value}</td>
+                    <td><button>Edite</button></td>
+                    <td><button onclick="ap(${contador})">Del</button></td>
                 </tr>
             `;
             nomeContato.value = '';
             telContato.value = '';
+            contador++;
+        }
+
+        function ap(id){
+            document.getElementById(id).remove();
         }
     </script>
 </body>
 </html>
+
+<!-- <!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table, th, td {
+            border: 1px solid white;
+            border-collapse: collapse;
+          }
+          th, td {
+            background-color: #96D4D4;
+          }
+    </style>
+</head>
+<body>
+    <div>
+        <fieldset>
+            <legend>Novo contato</legend>
+            <input type="text"  id="nomeContato"    placeholder="Nome">
+            <input type="tel"   id="telContato"     placeholder="(00)0000-0000">
+            <button id="btnSalvar">Salvar</button>
+        </fieldset>        
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Edite</th>
+                <th>Del</th>
+            </tr>
+        </thead>
+        <tbody id="tabelaContatos">
+
+        </tbody>
+    </table>
+
+    <script>
+        var contatos = [];
+        var btnSalvar = document.getElementById('btnSalvar');
+        var tabelaContatos = document.getElementById('tabelaContatos');
+
+        btnSalvar.onclick = function(){
+            var contato = {nome:nomeContato.value, tel:telContato.value};
+            contatos.push(contato);                      
+            exbirDados()
+        }
+
+
+        function exbirDados(){
+            var dados='';
+            var index = 0;
+            contatos.forEach(valor =>{
+                console.log(valor);
+                dados+=`
+                    <tr>
+                        <td>${valor.nome}</td>
+                        <td>${valor.tel}</td>
+                        <td><button>Edite</button></td>
+                        <td><button onclick="apagar(${index})">Del</button></td>
+                    </tr>
+                `;
+                index++;
+            });
+            tabelaContatos.innerHTML = dados;
+        }
+
+        function apagar(conponente){
+            delete contatos[conponente];
+            exbirDados();
+        }
+
+    </script>
+</body>
+</html> -->
