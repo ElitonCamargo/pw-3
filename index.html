@@ -5,6 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>html com backend</title>
+    <style>
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        th, td {
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #D6EEEE;
+        }
+        </style>
 </head>
 <body>
     <div>
@@ -19,6 +34,20 @@
         <button id="btnCal">=</button>
     </div>
 
+    <table>
+        <thead>
+            <tr>
+                <th>n1</th>
+                <th>OP</th>
+                <th>n2</th>
+                <th>Resultado</th>
+            </tr>
+        </thead>
+        <tbody id="resultado">
+            
+        </tbody>
+    </table>
+
     <script src="js/jquery.js"></script>
     <script>             
 
@@ -26,15 +55,24 @@
             let dados = {
                 'n1': $("#n1").val(),
                 'n2': $("#n2").val(),
-                'op': $("#op").val()
+                'op': $("#op").val(),
+                'result':0
             };
+
 
             //Preparando para enviar para o servidor PHP (JSON.stringify)
             dados = JSON.stringify(dados);
             console.log(dados);
 
-            $.post("index.backend.php",dados,function(var_resposta){
-                console.log(var_resposta);
+            $.post("index.backend.php",dados,function(x){
+                $("#resultado").append(
+                    `<tr>
+                        <td>${x.n1}</td>
+                        <td>${x.op}</td>
+                        <td>${x.n2}</td>
+                        <td>${x.result}</td>
+                    </tr>`
+                );
             });
         });
 
