@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html com backend</title>
+</head>
+<body>
+    <div>
+        <input type="text" id="n1" placeholder="0">
+        <select name="" id="op">            
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <input type="text" id="n2" placeholder="0">
+        <button id="btnCal">=</button>
+    </div>
+
+    <script src="js/jquery.js"></script>
+    <script>             
+
+        $("#btnCal").click(function(){
+            let dados = {
+                'n1': $("#n1").val(),
+                'n2': $("#n2").val(),
+                'op': $("#op").val()
+            };
+
+            //Preparando para enviar para o servidor PHP (JSON.stringify)
+            dados = JSON.stringify(dados);
+            console.log(dados);
+
+            $.post("index.backend.php",dados,function(var_resposta){
+                console.log(var_resposta);
+            });
+        });
+
+    </script> 
+</body>
+</html>
