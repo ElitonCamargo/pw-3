@@ -19,28 +19,24 @@
         tr:nth-child(even) {
           background-color: #D6EEEE;
         }
-        </style>
+
+        a{
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
     <div>
-        <input type="text" id="n1" placeholder="0">
-        <select name="" id="op">            
-            <option value="+">+</option>
-            <option value="-">-</option>
-            <option value="*">*</option>
-            <option value="/">/</option>
-        </select>
-        <input type="text" id="n2" placeholder="0">
-        <button id="btnCal">=</button>
+        <input type="text" id="txtBusca" placeholder="Buscar times">        
     </div>
 
     <table>
         <thead>
             <tr>
-                <th>n1</th>
-                <th>OP</th>
-                <th>n2</th>
-                <th>Resultado</th>
+                <th>Nome</th>
+                <th>Estádio</th>
+                <th>Capacidade estádio</th>
+                <th>Nº Títulos</th>
             </tr>
         </thead>
         <tbody id="resultado">
@@ -49,37 +45,39 @@
     </table>
 
     <script src="js/jquery.js"></script>
-    <script>             
-
-        $("#btnCal").click(function(){
-            let dados = {
-                "n1":       $("#n1").val(),
-                "n2":       $("#n2").val(),
-                "op":       $("#op").val(),
-                "result":   0
-            };
-
-
-            //Preparando para enviar para o servidor PHP (JSON.stringify)
-            dados = JSON.stringify(dados);
-            console.log(dados);
-
-            $.post("index.backend.php",dados,function(x){  
-                var idDel = Date.now();               
-                $("#resultado").append(
-                    `<tr id='${idDel}'>
-                        <td>${x.n1}</td>
-                        <td>${x.op}</td>
-                        <td>${x.n2}</td>
-                        <td>${x.result}</td>
-                        <td><button onclick="deletarElemento('${idDel}')">DEL</button></td>
-                    </tr>`
-                );
-            });
+    <script>
+        const url = $(location).attr('href'); 
+         
+        $(window).on( "load", function() {
+            buscarDados();
         });
-        function deletarElemento(elemento){
-            $("#"+elemento).remove();
-        }
+               
+        $('#txtBusca').keyup(function(){            
+            buscarDados();
+        });
+
+       function buscarDados(){
+        let busca = {
+                "busca": $("#txtBusca").val()
+            }
+            busca = JSON.stringify(busca);
+
+            $.post(`${url}/backend/clube/index.php`,busca,function(resposta){
+                let tabelaDeClubes = '';
+                if(resposta.result){
+                    resposta.valores.forEach(clube => {
+                        tabelaDeClubes += `<tr>
+                                            <td><a href="#">${clube.nome}</a></td>
+                                            <td>${clube.estadio}</td>
+                                            <td>${clube.capacidade_estadio}</td>
+                                            <td>${clube.num_titulos}</td>
+                                        </tr>`;
+                    });
+
+                    $("#resultado").html(tabelaDeClubes);
+                }                
+            });
+       }
     </script> 
 </body>
 </html>
